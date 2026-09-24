@@ -25,29 +25,29 @@ jobs:
           version: '6.7.2'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2022_64'
-          modules: 'qtdeclarative qtsvg'
+          arch: 'win64_msvc2019_64'
 
       - name: Configure CMake
+        shell: pwsh
         run: |
           cmake -B build -S . `
-            -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_PREFIX_PATH="$env:Qt6_DIR"
+            -DCMAKE_BUILD_TYPE=Release
 
       - name: Build Project
+        shell: pwsh
         run: |
           cmake --build build --config Release --parallel
 
       - name: Prepare Windows Deployment Package
         shell: pwsh
         run: |
-          mkdir dist-package
+          New-Item -ItemType Directory -Force -Path dist-package
           Copy-Item build\Release\makasna_broadcast_cg.exe dist-package\MakasnaBroadcastCG.exe
           
           # Run windeployqt to copy required Qt6 and Windows runtime DLLs
           windeployqt --qmldir src/qml --release --no-translations dist-package\MakasnaBroadcastCG.exe
           
-          # Archive into clean zip
+          # Archive into clean standalone zip
           Compress-Archive -Path dist-package\* -DestinationPath Makasna.Broadcast.CG.Native-Qt6-Windows.zip
 
       - name: Upload Artifact
@@ -57,11 +57,12 @@ jobs:
           path: Makasna.Broadcast.CG.Native-Qt6-Windows.zip
 
       - name: Create or Update GitHub Release
+        shell: pwsh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete v1.0.0 --yes 2>$null || true
           gh release create v1.0.0 `
             Makasna.Broadcast.CG.Native-Qt6-Windows.zip `
             --title "Makasna Native Broadcast CG v1.0.0 (C++20 / Qt6)" `
-            --notes "Aplikasi Desktop Character Generator (CG) Murni Native C++20 + Qt6 untuk Penyiaran TV Standar Tier-1. Ringan, bebas Chromium/Electron, hemat RAM, mendukung Blackmagic DeckLink SDI Key & Fill."
+            --notes "Aplikasi Desktop Character Generator (CG) Murni Native C++20 + Qt6 untuk Penyiaran TV Standar Tier-1. Ringan, bebas Chromium/Electron, hemat RAM, mendukung Blackmagic DeckLink SDI Key & Fill." `
+            --clobber
