@@ -1,0 +1,67 @@
+name: Build Native Windows Qt6 Broadcast CG
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC Compiler
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.7.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2022_64'
+          modules: 'qtdeclarative qtsvg'
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_PREFIX_PATH="$env:Qt6_DIR"
+
+      - name: Build Project
+        run: |
+          cmake --build build --config Release --parallel
+
+      - name: Prepare Windows Deployment Package
+        shell: pwsh
+        run: |
+          mkdir dist-package
+          Copy-Item build\Release\makasna_broadcast_cg.exe dist-package\MakasnaBroadcastCG.exe
+          
+          # Run windeployqt to copy required Qt6 and Windows runtime DLLs
+          windeployqt --qmldir src/qml --release --no-translations dist-package\MakasnaBroadcastCG.exe
+          
+          # Archive into clean zip
+          Compress-Archive -Path dist-package\* -DestinationPath Makasna.Broadcast.CG.Native-Qt6-Windows.zip
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Makasna-Broadcast-CG-Native-Qt6-Windows
+          path: Makasna.Broadcast.CG.Native-Qt6-Windows.zip
+
+      - name: Create or Update GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete v1.0.0 --yes 2>$null || true
+          gh release create v1.0.0 `
+            Makasna.Broadcast.CG.Native-Qt6-Windows.zip `
+            --title "Makasna Native Broadcast CG v1.0.0 (C++20 / Qt6)" `
+            --notes "Aplikasi Desktop Character Generator (CG) Murni Native C++20 + Qt6 untuk Penyiaran TV Standar Tier-1. Ringan, bebas Chromium/Electron, hemat RAM, mendukung Blackmagic DeckLink SDI Key & Fill."

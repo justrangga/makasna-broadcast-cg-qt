@@ -1,0 +1,12 @@
+build/
+*.user
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+dist-package/
+*.zip
+.vscode/
+.idea/

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>makasna-logo.svg</file>
+        <file>makasna-logo.png</file>
+        <file>makasna-icon.ico</file>
+    </qresource>
+</RCC>
