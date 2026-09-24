@@ -61,8 +61,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          gh release delete v1.0.0 --yes 2>$null
+          $global:LASTEXITCODE = 0
           gh release create v1.0.0 `
             Makasna.Broadcast.CG.Native-Qt6-Windows.zip `
             --title "Makasna Native Broadcast CG v1.0.0 (C++20 / Qt6)" `
-            --notes "Aplikasi Desktop Character Generator (CG) Murni Native C++20 + Qt6 untuk Penyiaran TV Standar Tier-1. Ringan, bebas Chromium/Electron, hemat RAM, mendukung Blackmagic DeckLink SDI Key & Fill." `
-            --clobber
+            --notes "Aplikasi Desktop Character Generator (CG) Murni Native C++20 + Qt6 untuk Penyiaran TV Standar Tier-1. Ringan, bebas Chromium/Electron, hemat RAM, mendukung Blackmagic DeckLink SDI Key & Fill."
