@@ -8,9 +8,9 @@
 
 ## Overview
 
-Makasna Broadcast CG is a high-performance broadcast character generator and real-time graphics playout system engineered for live television production, OB vans, and master control environments.
+Makasna Broadcast CG is a high-performance character generator and real-time graphics playout system engineered for live television production, outside broadcasting (OB vans), and master control environments.
 
-Built on native C++20 and Qt6 (QML), Makasna Broadcast CG operates as a single, lightweight native process in Windows without Chromium or Electron runtimes. The architecture delivers deterministic 60 fps GPU compositing via Direct3D 11 and OpenGL RHI with microsecond-level clock accuracy, minimal memory overhead (~40 MB baseline RAM), and zero garbage collection latency.
+Built on native C++20 and Qt6 (QML), Makasna Broadcast CG delivers deterministic 60 fps GPU compositing via Direct3D 11 and OpenGL RHI. Designed for low-latency operational environments, the system provides microsecond-level clock accuracy, a compact memory footprint (~40 MB baseline RAM), and zero garbage collection interruptions.
 
 ---
 
