@@ -60,7 +60,7 @@ Rectangle {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "🎨 Designer"
+                        text: "Designer"
                         font.pixelSize: 12
                         font.bold: true
                         color: root.workspaceMode === "designer" ? "#00e5ff" : "#94a3b8"
@@ -81,7 +81,7 @@ Rectangle {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "⚡ Playout"
+                        text: "Playout"
                         font.pixelSize: 12
                         font.bold: true
                         color: root.workspaceMode === "playout" ? "#ff334b" : "#94a3b8"
@@ -100,14 +100,14 @@ Rectangle {
 
         // Smart Data Hub Button
         Button {
-            text: "📊 Smart Data Hub"
+            text: "Smart Data Hub"
             font.pixelSize: 12
             onClicked: root.openDataHubDialog()
         }
 
         // Hardware Output Dialog Button
         Button {
-            text: "⚙️ Hardware Output (DeckLink)"
+            text: "Hardware Output (DeckLink)"
             font.pixelSize: 12
             onClicked: root.openHardwareDialog()
         }

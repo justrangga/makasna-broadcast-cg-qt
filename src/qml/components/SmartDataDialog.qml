@@ -66,7 +66,7 @@ Dialog {
                 Item { Layout.fillWidth: true }
 
                 Button {
-                    text: "🔄 Sync Sekarang"
+                    text: "Sync Sekarang"
                     enabled: smartDataManager.isSyncing
                     onClicked: smartDataManager.manualRefresh()
                     contentItem: Text {
@@ -85,7 +85,7 @@ Dialog {
                 }
 
                 Button {
-                    text: "⏹ Berhenti"
+                    text: "Berhenti"
                     enabled: smartDataManager.isSyncing
                     onClicked: smartDataManager.stopAutoSync()
                     contentItem: Text {
@@ -112,15 +112,15 @@ Dialog {
             background: Rectangle { color: "#0f131c" }
 
             TabButton {
-                text: "📑 Local Excel / CSV / JSON"
+                text: "Local File (Excel / CSV / JSON)"
                 width: implicitWidth + 24
             }
             TabButton {
-                text: "📊 Google Spreadsheet (Live)"
+                text: "Google Spreadsheet (Live)"
                 width: implicitWidth + 24
             }
             TabButton {
-                text: "🌐 REST API JSON / XML Feed"
+                text: "REST API (JSON / XML Feed)"
                 width: implicitWidth + 24
             }
         }

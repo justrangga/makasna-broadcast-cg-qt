@@ -25,9 +25,9 @@ Dialog {
         TabBar {
             id: tabBar
             Layout.fillWidth: true
-            TabButton { text: "🔌 Blackmagic DeckLink (SDI)" }
-            TabButton { text: "📺 Secondary Display (HDMI/DP)" }
-            TabButton { text: "🌐 RossTalk & Web Server" }
+            TabButton { text: "Blackmagic DeckLink (SDI)" }
+            TabButton { text: "Secondary Display (HDMI/DP)" }
+            TabButton { text: "RossTalk & Web Server" }
         }
 
         StackLayout {
@@ -67,7 +67,7 @@ Dialog {
                             model: decklinkController.getDevices()
                         }
                         Button {
-                            text: "🔄 Scan"
+                            text: "Scan Devices"
                             onClicked: {
                                 decklinkDeviceCombo.model = decklinkController.getDevices()
                             }
@@ -113,7 +113,7 @@ Dialog {
                     RowLayout {
                         spacing: 12
                         Button {
-                            text: decklinkController.isStreaming ? "⏹ STOP DECKLINK" : "▶ START DECKLINK PLAYOUT"
+                            text: decklinkController.isStreaming ? "STOP DECKLINK" : "START DECKLINK PLAYOUT"
                             font.bold: true
                             highlighted: !decklinkController.isStreaming
                             onClicked: {
