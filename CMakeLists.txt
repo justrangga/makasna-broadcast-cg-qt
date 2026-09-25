@@ -18,6 +18,8 @@ qt_add_executable(makasna_broadcast_cg
     src/core/AnimationEngine.cpp
     src/core/ProjectModel.h
     src/core/ProjectModel.cpp
+    src/core/SmartDataManager.h
+    src/core/SmartDataManager.cpp
     src/core/PlayoutController.h
     src/core/PlayoutController.cpp
     src/hardware/DeckLinkController.h
@@ -67,4 +69,5 @@ if (WIN32)
     set_target_properties(makasna_broadcast_cg PROPERTIES
         WIN32_EXECUTABLE TRUE
     )
+    target_link_libraries(makasna_broadcast_cg PRIVATE ole32 oleaut32)
 endif()

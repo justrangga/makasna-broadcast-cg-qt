@@ -62,12 +62,26 @@ Dialog {
                         ComboBox {
                             id: decklinkDeviceCombo
                             Layout.fillWidth: true
-                            model: [
-                                "DeckLink Duo 2 (Channel 1 - SDI Fill & Key)",
-                                "DeckLink Duo 2 (Channel 2 - SDI)",
-                                "DeckLink Quad 2 (SDI 1-8)",
-                                "DeckLink 8K Pro (SDI 1-4 12G-SDI)"
-                            ]
+                            textRole: "name"
+                            valueRole: "index"
+                            model: decklinkController.getDevices()
+                        }
+                        Button {
+                            text: "🔄 Scan"
+                            onClicked: {
+                                decklinkDeviceCombo.model = decklinkController.getDevices()
+                            }
+                            contentItem: Text {
+                                text: parent.text
+                                color: "#00e5ff"
+                                font.bold: true
+                                font.pixelSize: 11
+                            }
+                            background: Rectangle {
+                                color: "#1e293b"
+                                border.color: "#00e5ff"
+                                radius: 4
+                            }
                         }
                     }
 

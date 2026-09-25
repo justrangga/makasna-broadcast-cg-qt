@@ -227,6 +227,26 @@ void ProjectModel::addKeyframeAtCurrentTime(const QString &templateId, const QSt
     // Keyframe addition helper
 }
 
+void ProjectModel::addDataset(const QString &name, const QStringList &headers, const QVariantList &rows) {
+    for (int i = 0; i < m_datasets.size(); ++i) {
+        QVariantMap ds = m_datasets[i].toMap();
+        if (ds.value("name").toString() == name) {
+            ds["headers"] = QVariant::fromValue(headers);
+            ds["rows"] = rows;
+            m_datasets[i] = ds;
+            emit datasetsChanged();
+            return;
+        }
+    }
+    QVariantMap newDs;
+    newDs["id"] = "ds_" + QString::number(m_datasets.size() + 1);
+    newDs["name"] = name;
+    newDs["headers"] = QVariant::fromValue(headers);
+    newDs["rows"] = rows;
+    m_datasets.append(newDs);
+    emit datasetsChanged();
+}
+
 void ProjectModel::importCsvData(const QString &datasetId, const QString &csvContent) {
     QStringList lines = csvContent.split('\n');
     if (lines.isEmpty()) return;

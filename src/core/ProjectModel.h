@@ -54,6 +54,7 @@ public:
     Q_INVOKABLE void addKeyframeAtCurrentTime(const QString &templateId, const QString &layerId);
 
     // Dataset Management
+    Q_INVOKABLE void addDataset(const QString &name, const QStringList &headers, const QVariantList &rows);
     Q_INVOKABLE void importCsvData(const QString &datasetId, const QString &csvContent);
     Q_INVOKABLE QVariantList getDatasetRows(const QString &datasetId) const;
 
