@@ -13,6 +13,7 @@ Rectangle {
     signal modeChanged(string newMode)
     signal openHardwareDialog()
     signal openDataHubDialog()
+    signal openEsportsDialog()
 
     RowLayout {
         anchors.fill: parent
@@ -103,6 +104,13 @@ Rectangle {
             text: "Smart Data Hub"
             font.pixelSize: 12
             onClicked: root.openDataHubDialog()
+        }
+
+        // Esports Hub Button (Barracks Controller & Sight)
+        Button {
+            text: "Esports & Sight Hub"
+            font.pixelSize: 12
+            onClicked: root.openEsportsDialog()
         }
 
         // Hardware Output Dialog Button

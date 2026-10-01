@@ -20,6 +20,8 @@ qt_add_executable(makasna_broadcast_cg
     src/core/ProjectModel.cpp
     src/core/SmartDataManager.h
     src/core/SmartDataManager.cpp
+    src/core/EsportsMatchEngine.h
+    src/core/EsportsMatchEngine.cpp
     src/core/PlayoutController.h
     src/core/PlayoutController.cpp
     src/hardware/DeckLinkController.h
@@ -48,11 +50,16 @@ qt_add_qml_module(makasna_broadcast_cg
         src/qml/components/PlayoutConsole.qml
         src/qml/components/HardwareOutputDialog.qml
         src/qml/components/SmartDataDialog.qml
+        src/qml/components/EsportsHubDialog.qml
         src/qml/templates/LowerThirdNews.qml
         src/qml/templates/SmartLeaderboard.qml
         src/qml/templates/ScorebugMatch.qml
         src/qml/templates/RunningTicker.qml
         src/qml/templates/ChannelBugWatermark.qml
+        src/qml/templates/EsportsScorebug.qml
+        src/qml/templates/PlayerComparison.qml
+        src/qml/templates/PickBanVeto.qml
+        src/qml/templates/SponsorPresenterBanner.qml
 )
 
 target_link_libraries(makasna_broadcast_cg PRIVATE

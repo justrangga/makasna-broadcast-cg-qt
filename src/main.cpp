@@ -8,6 +8,7 @@
 #include "core/ProjectModel.h"
 #include "core/PlayoutController.h"
 #include "core/SmartDataManager.h"
+#include "core/EsportsMatchEngine.h"
 #include "hardware/DeckLinkController.h"
 #include "hardware/SecondaryDisplayManager.h"
 #include "network/RossTalkServer.h"
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]) {
     auto *animationEngine = new AnimationEngine(&app);
     auto *projectModel = new ProjectModel(&app);
     auto *smartDataManager = new SmartDataManager(projectModel, &app);
+    auto *esportsEngine = new EsportsMatchEngine(&app);
     auto *playoutController = new PlayoutController(&app);
     auto *decklinkController = new DeckLinkController(&app);
     auto *secondaryDisplayManager = new SecondaryDisplayManager(&app);
@@ -45,6 +47,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("animationEngine", animationEngine);
     engine.rootContext()->setContextProperty("projectModel", projectModel);
     engine.rootContext()->setContextProperty("smartDataManager", smartDataManager);
+    engine.rootContext()->setContextProperty("esportsEngine", esportsEngine);
     engine.rootContext()->setContextProperty("playoutController", playoutController);
     engine.rootContext()->setContextProperty("decklinkController", decklinkController);
     engine.rootContext()->setContextProperty("secondaryDisplayManager", secondaryDisplayManager);

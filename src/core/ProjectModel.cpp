@@ -403,6 +403,46 @@ void ProjectModel::initDefaultProject() {
     tplBug["layers"] = layersBug;
     m_templates.append(tplBug);
 
+    // Template 6: Esports HUD Scorebug
+    QVariantMap tplScorebug;
+    tplScorebug["id"] = "tpl_esports_scorebug";
+    tplScorebug["name"] = "Esports HUD Scorebug";
+    tplScorebug["category"] = "esports";
+    tplScorebug["defaultLayer"] = "L3";
+    tplScorebug["duration"] = 0.0;
+    tplScorebug["layers"] = QVariantList();
+    m_templates.append(tplScorebug);
+
+    // Template 7: Player Head-to-Head Comparison
+    QVariantMap tplH2H;
+    tplH2H["id"] = "tpl_player_comparison";
+    tplH2H["name"] = "Player Head-to-Head Stats";
+    tplH2H["category"] = "esports";
+    tplH2H["defaultLayer"] = "L1";
+    tplH2H["duration"] = 15.0;
+    tplH2H["layers"] = QVariantList();
+    m_templates.append(tplH2H);
+
+    // Template 8: Map Veto / Pick & Ban
+    QVariantMap tplVeto;
+    tplVeto["id"] = "tpl_pick_ban";
+    tplVeto["name"] = "Tournament Map Veto";
+    tplVeto["category"] = "esports";
+    tplVeto["defaultLayer"] = "L1";
+    tplVeto["duration"] = 20.0;
+    tplVeto["layers"] = QVariantList();
+    m_templates.append(tplVeto);
+
+    // Template 9: Sponsor Presenter Banner (Barracks Sight)
+    QVariantMap tplSponsor;
+    tplSponsor["id"] = "tpl_sponsor_banner";
+    tplSponsor["name"] = "Sponsor Presenter Banner";
+    tplSponsor["category"] = "branding";
+    tplSponsor["defaultLayer"] = "L2";
+    tplSponsor["duration"] = 15.0;
+    tplSponsor["layers"] = QVariantList();
+    m_templates.append(tplSponsor);
+
     // 3. Rundown
     QVariantMap rItem1;
     rItem1["id"] = "item_1";
@@ -419,6 +459,30 @@ void ProjectModel::initDefaultProject() {
     rItem2["targetLayer"] = "L4";
     rItem2["status"] = "idle";
     m_rundown.append(rItem2);
+
+    QVariantMap rItem3;
+    rItem3["id"] = "item_esports_hud";
+    rItem3["title"] = "Esports HUD Scorebug - Live Match (L3)";
+    rItem3["templateId"] = "tpl_esports_scorebug";
+    rItem3["targetLayer"] = "L3";
+    rItem3["status"] = "idle";
+    m_rundown.append(rItem3);
+
+    QVariantMap rItem4;
+    rItem4["id"] = "item_player_h2h";
+    rItem4["title"] = "Head-to-Head Comparison - RENX vs VIPERZ (L1)";
+    rItem4["templateId"] = "tpl_player_comparison";
+    rItem4["targetLayer"] = "L1";
+    rItem4["status"] = "idle";
+    m_rundown.append(rItem4);
+
+    QVariantMap rItem5;
+    rItem5["id"] = "item_sponsor_sight";
+    rItem5["title"] = "Sponsor Rotation Banner - Sight Telemetry (L2)";
+    rItem5["templateId"] = "tpl_sponsor_banner";
+    rItem5["targetLayer"] = "L2";
+    rItem5["status"] = "idle";
+    m_rundown.append(rItem5);
 
     m_activeTemplateId = "tpl_lower_third_news";
     m_selectedLayerId = "layer_headline_text";

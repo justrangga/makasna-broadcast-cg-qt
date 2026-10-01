@@ -81,7 +81,7 @@ Rectangle {
                     color: "#ff334b"
                     Text {
                         anchors.centerIn: parent
-                        text: "● PROGRAM (LIVE)"
+                        text: "[LIVE] PROGRAM"
                         font.bold: true
                         font.pixelSize: 10
                         font.family: "Monospace"
@@ -138,7 +138,7 @@ Rectangle {
             spacing: 12
 
             Button {
-                text: "▶ TAKE (SPACEBAR)"
+                text: "TAKE (SPACE)"
                 Layout.preferredWidth: 200
                 Layout.fillHeight: true
                 font.bold: true
@@ -148,7 +148,7 @@ Rectangle {
             }
 
             Button {
-                text: "⏹ CLEAR ALL (ESC)"
+                text: "CLEAR ALL (ESC)"
                 Layout.preferredWidth: 160
                 Layout.fillHeight: true
                 font.bold: true
@@ -178,15 +178,15 @@ Rectangle {
                     anchors.centerIn: parent
                     spacing: 8
                     Text {
-                        text: "⏱ " + playoutController.clockString
+                        text: "CLOCK " + playoutController.clockString
                         font.family: "Monospace"
                         font.bold: true
                         font.pixelSize: 16
                         color: playoutController.isClockRunning ? "#00e676" : "#f59e0b"
                     }
                     Button {
-                        text: playoutController.isClockRunning ? "⏸" : "▶"
-                        implicitWidth: 32; implicitHeight: 28
+                        text: playoutController.isClockRunning ? "PAUSE" : "START"
+                        implicitWidth: 54; implicitHeight: 28
                         onClicked: {
                             if (playoutController.isClockRunning) playoutController.pauseClock()
                             else playoutController.startClock()

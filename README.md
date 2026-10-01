@@ -29,6 +29,11 @@ Built on native C++20 and Qt6 (QML), Makasna Broadcast CG delivers deterministic
 - **RossTalk Protocol Listener:** Embedded TCP listener on port 7788 for production switcher macro triggers (`TAKE`, `CUE`, `CLEAR`, `GOAL`).
 - **HTTP Playout Server:** Embedded server on port 4989 providing canvas access for IP-based workflows.
 
+### Esports & Sponsor Telemetry Engine
+- **Esports Controller Suite:** Live match state controller supporting multi-map series formats (BO1, BO3, BO5, BO7), round tracking, side swap, and real-time game state ingest via JSON telemetry.
+- **Broadcast Esports Templates:** Dedicated graphics templates for esports tournament production including Esports HUD Scorebug, Player Head-to-Head comparison cards, and Tournament Map Veto (Pick & Ban) sequences.
+- **Sponsor Engine & Proof-of-Play Telemetry:** Dynamic rotating sponsor banner strap with automated scheduling and brand visibility tracking. Tracks cumulative on-air exposure time (millisecond accuracy) per sponsor brand with CSV proof-of-play reporting for tournament organizers and commercial partners.
+
 ### Dual Operating Workspaces
 - **Designer Studio:** 1080p WYSIWYG canvas, SMPTE Safe Zone overlays (Action Safe 90%, Title Safe 80%), interactive layer dragging with automatic animation delta synchronization, axis lock, center snapping, and multi-track keyframe timeline ruler.
 - **Playout Console:** Dual-tally Preview (Green) and Program (Red) monitors, Rundown Playlist management, layer clear triggers (L1 to L4), scorebug controls, and digital match clock.

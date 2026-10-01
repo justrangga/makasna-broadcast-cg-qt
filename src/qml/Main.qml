@@ -26,6 +26,7 @@ ApplicationWindow {
             onModeChanged: (mode) => window.workspaceMode = mode
             onOpenHardwareDialog: hardwareDialog.open()
             onOpenDataHubDialog: dataHubDialog.open()
+            onOpenEsportsDialog: esportsDialog.open()
         }
 
         // 2. Main Workspace (Designer Studio vs Playout Console)
@@ -87,5 +88,10 @@ ApplicationWindow {
     // Smart Data Hub Dialog
     SmartDataDialog {
         id: dataHubDialog
+    }
+
+    // Esports Engine & Sponsor Telemetry Dialog (Barracks Controller & Sight)
+    EsportsHubDialog {
+        id: esportsDialog
     }
 }

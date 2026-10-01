@@ -66,4 +66,4 @@ jobs:
           gh release create v1.0.0 `
             Makasna.Broadcast.CG.Native-Qt6-Windows.zip `
             --title "Makasna Native Broadcast CG v1.0.0 (C++20 / Qt6)" `
-            --notes "Sistem Character Generator (CG) dan Playout Grafis Siaran Televisi berbasis C++20 dan Qt6. Dilengkapi akselerasi GPU 60 fps, routing Blackmagic DeckLink SDI Key & Fill, output display sekunder borderless, integrasi data otomatis (Excel, Google Sheets, JSON, XML), serta protokol otomasi RossTalk."
+            --notes "Sistem Character Generator (CG) dan Playout Grafis Siaran Televisi berbasis C++20 dan Qt6. Dilengkapi akselerasi GPU 60 fps, routing Blackmagic DeckLink SDI Key & Fill, output display sekunder borderless, integrasi data otomatis (Excel, Google Sheets, JSON, XML), Esports Match & Tournament Engine, telemetry rotasi sponsor (Barracks Sight standard), serta protokol otomasi RossTalk."
