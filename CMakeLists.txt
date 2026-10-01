@@ -9,6 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Qml Network Svg QuickControls2)
+qt_policy(SET QTP0001 NEW)
+qt_policy(SET QTP0004 NEW)
 qt_standard_project_setup()
 
 # Application Executable
@@ -39,6 +41,11 @@ qt_add_executable(makasna_broadcast_cg
 qt_add_qml_module(makasna_broadcast_cg
     URI Makasna.BroadcastCG
     VERSION 1.0
+    RESOURCE_PREFIX "/qt/qml"
+    DEPENDENCIES
+        QtQuick
+        QtQuick.Controls
+        QtQuick.Layouts
     QML_FILES
         src/qml/Main.qml
         src/qml/components/HeaderBar.qml

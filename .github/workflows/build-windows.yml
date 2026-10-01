@@ -45,7 +45,20 @@ jobs:
           Copy-Item build\Release\makasna_broadcast_cg.exe dist-package\MakasnaBroadcastCG.exe
           
           # Run windeployqt to copy required Qt6 and Windows runtime DLLs
-          windeployqt --qmldir src/qml --release --no-translations dist-package\MakasnaBroadcastCG.exe
+          windeployqt --compiler-runtime --qmldir src/qml --release --no-translations dist-package\MakasnaBroadcastCG.exe
+          
+          # Copy Microsoft Visual C++ 2015-2022 CRT runtime DLLs directly into package
+          # Ensures standalone execution on any clean Windows 10/11 system without requiring vc_redist install
+          $crtDirs = Get-ChildItem -Path "$env:VCToolsRedistDir\x64" -Filter "Microsoft.VC*.CRT" -Directory
+          foreach ($dir in $crtDirs) {
+            Copy-Item "$($dir.FullName)\*.dll" dist-package\ -Force
+          }
+          
+          # Copy QML module directory if generated in build
+          if (Test-Path build\Makasna) {
+            New-Item -ItemType Directory -Force -Path dist-package\qml\Makasna
+            Copy-Item -Recurse -Force build\Makasna\* dist-package\qml\Makasna\
+          }
           
           # Archive into clean standalone zip
           Compress-Archive -Path dist-package\* -DestinationPath Makasna.Broadcast.CG.Native-Qt6-Windows.zip
