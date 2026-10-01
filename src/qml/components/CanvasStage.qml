@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 Rectangle {
     id: root
@@ -11,17 +12,28 @@ Rectangle {
     property string selectedLayerId: projectModel.selectedLayerId
 
     // Canvas Container (1920x1080 scaled by zoom)
-    Item {
-        id: canvasBox
+    DropArea {
+        id: canvasDropArea
         width: 1920 * root.zoom
         height: 1080 * root.zoom
         anchors.centerIn: parent
 
+        onDropped: function(drop) {
+            if (drop.hasUrls) {
+                for (var i = 0; i < drop.urls.length; i++) {
+                    var url = drop.urls[i];
+                    var type = assetManager.detectAssetType(url);
+                    assetManager.importAsset(url);
+                    projectModel.addMediaLayer("Media Asset", url, type, 1);
+                }
+            }
+        }
+
         Rectangle {
             anchors.fill: parent
-            color: "#0a0e17"
-            border.color: "#1e293b"
-            border.width: 1
+            color: canvasDropArea.containsDrag ? "#141c2b" : "#0a0e17"
+            border.color: canvasDropArea.containsDrag ? "#00e5ff" : "#1e293b"
+            border.width: canvasDropArea.containsDrag ? 2 : 1
 
             // 1920x1080 Unscaled Coordinate Root
             Item {
@@ -46,7 +58,7 @@ Rectangle {
                         height: tr.height || 40
                         visible: layerData.visible !== false
 
-                        // Visual Content (Shape, Image, or Text)
+                        // Visual Content (Shape, Image, Video, Lottie, or Text)
                         Rectangle {
                             anchors.fill: parent
                             visible: layerData.type === "shape"
@@ -56,9 +68,41 @@ Rectangle {
 
                         Image {
                             anchors.fill: parent
-                            visible: layerData.type === "image"
-                            source: (layerData.content && layerData.content.src) ? layerData.content.src : ""
+                            visible: layerData.type === "image" || layerData.type === "svg" || (layerData.mediaType === "image" || layerData.mediaType === "svg")
+                            source: layerData.source ? (layerData.source.indexOf(":") !== -1 ? layerData.source : "file:///" + layerData.source) : ((layerData.content && layerData.content.src) ? layerData.content.src : "")
                             fillMode: Image.PreserveAspectFit
+                            smooth: true
+                            mipmap: true
+                        }
+
+                        Rectangle {
+                            anchors.fill: parent
+                            visible: layerData.type === "video" || layerData.type === "lottie" || layerData.mediaType === "video" || layerData.mediaType === "lottie"
+                            color: "#1e1e2f"
+                            border.color: layerData.mediaType === "lottie" ? "#8b5cf6" : "#3b82f6"
+                            border.width: 1
+                            radius: 4
+
+                            ColumnLayout {
+                                anchors.centerIn: parent
+                                spacing: 4
+
+                                Text {
+                                    text: layerData.mediaType === "lottie" ? "[AE LOTTIE MOTION]" : "[BROADCAST VIDEO]"
+                                    font.bold: true
+                                    font.pixelSize: 14
+                                    color: layerData.mediaType === "lottie" ? "#c084fc" : "#60a5fa"
+                                    horizontalAlignment: Text.AlignHCenter
+                                }
+
+                                Text {
+                                    text: layerData.name || layerData.source || ""
+                                    font.pixelSize: 11
+                                    color: "#94a3b8"
+                                    horizontalAlignment: Text.AlignHCenter
+                                    elide: Text.ElideMiddle
+                                }
+                            }
                         }
 
                         Text {

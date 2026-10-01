@@ -25,6 +25,8 @@ qt_add_executable(makasna_broadcast_cg
     src/core/SmartDataManager.cpp
     src/core/EsportsMatchEngine.h
     src/core/EsportsMatchEngine.cpp
+    src/core/AssetManager.h
+    src/core/AssetManager.cpp
     src/core/PlayoutController.h
     src/core/PlayoutController.cpp
     src/hardware/DeckLinkController.h
@@ -59,6 +61,7 @@ qt_add_qml_module(makasna_broadcast_cg
         src/qml/components/HardwareOutputDialog.qml
         src/qml/components/SmartDataDialog.qml
         src/qml/components/EsportsHubDialog.qml
+        src/qml/components/AssetLibraryDialog.qml
         src/qml/templates/LowerThirdNews.qml
         src/qml/templates/SmartLeaderboard.qml
         src/qml/templates/ScorebugMatch.qml
@@ -84,5 +87,5 @@ if (WIN32)
     set_target_properties(makasna_broadcast_cg PROPERTIES
         WIN32_EXECUTABLE TRUE
     )
-    target_link_libraries(makasna_broadcast_cg PRIVATE ole32 oleaut32)
+    target_link_libraries(makasna_broadcast_cg PRIVATE ole32 oleaut32 setupapi)
 endif()

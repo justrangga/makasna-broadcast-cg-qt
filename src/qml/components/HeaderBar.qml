@@ -14,6 +14,7 @@ Rectangle {
     signal openHardwareDialog()
     signal openDataHubDialog()
     signal openEsportsDialog()
+    signal openAssetDialog()
 
     RowLayout {
         anchors.fill: parent
@@ -104,6 +105,13 @@ Rectangle {
             text: "Smart Data Hub"
             font.pixelSize: 12
             onClicked: root.openDataHubDialog()
+        }
+
+        // Aset & Media (After Effects & Video)
+        Button {
+            text: "Aset & Media (AE / Video)"
+            font.pixelSize: 12
+            onClicked: root.openAssetDialog()
         }
 
         // Esports Hub Button (Barracks Controller & Sight)

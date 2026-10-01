@@ -15,6 +15,8 @@ class DeckLinkController : public QObject {
     Q_PROPERTY(int droppedFrames READ droppedFrames NOTIFY droppedFramesChanged)
     Q_PROPERTY(quint64 outputFrames READ outputFrames NOTIFY outputFramesChanged)
     Q_PROPERTY(bool genlockLocked READ genlockLocked NOTIFY genlockLockedChanged)
+    Q_PROPERTY(QVariantList devices READ devices NOTIFY devicesChanged)
+    Q_PROPERTY(bool hasHardwareDevices READ hasHardwareDevices NOTIFY devicesChanged)
 
 public:
     explicit DeckLinkController(QObject *parent = nullptr);
@@ -26,8 +28,11 @@ public:
     int droppedFrames() const { return m_droppedFrames; }
     quint64 outputFrames() const { return m_outputFrames; }
     bool genlockLocked() const { return m_genlockLocked; }
+    QVariantList devices() const { return m_cachedDevices; }
+    bool hasHardwareDevices() const { return m_hasHardwareDevices; }
 
     Q_INVOKABLE QVariantList getDevices() const;
+    Q_INVOKABLE void refreshDevices();
     Q_INVOKABLE bool startPlayout(int deviceIndex, const QString &standard, const QString &keyer);
     Q_INVOKABLE void stopPlayout();
 
@@ -39,11 +44,15 @@ signals:
     void droppedFramesChanged();
     void outputFramesChanged();
     void genlockLockedChanged();
+    void devicesChanged();
 
 private slots:
     void onFrameTick();
+    void onAutoScanTick();
 
 private:
+    QVariantList scanDevicesInternal();
+
     bool m_isStreaming = false;
     QString m_selectedDevice;
     QString m_videoStandard = "1080p60";
@@ -51,5 +60,9 @@ private:
     int m_droppedFrames = 0;
     quint64 m_outputFrames = 0;
     bool m_genlockLocked = true;
+    bool m_hasHardwareDevices = false;
+    QVariantList m_cachedDevices;
+
     QTimer *m_frameTimer = nullptr;
+    QTimer *m_scanTimer = nullptr;
 };

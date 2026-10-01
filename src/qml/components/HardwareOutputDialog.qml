@@ -56,6 +56,30 @@ Dialog {
                         Layout.fillWidth: true
                     }
 
+                    // Hardware Status Indicator Badge
+                    Rectangle {
+                        Layout.fillWidth: true
+                        height: 28
+                        color: decklinkController.hasHardwareDevices ? "#062822" : "#241808"
+                        border.color: decklinkController.hasHardwareDevices ? "#059669" : "#d97706"
+                        radius: 4
+
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.leftMargin: 10
+                            anchors.rightMargin: 10
+
+                            Text {
+                                text: decklinkController.hasHardwareDevices 
+                                    ? "[HARDWARE AKTIF] Kartu Blackmagic DeckLink fisik terdeteksi pada PC." 
+                                    : "[SIMULASI] Tidak ada kartu fisik DeckLink terdeteksi. Menggunakan simulasi playout untuk penataan grafis."
+                                color: decklinkController.hasHardwareDevices ? "#34d399" : "#fbbf24"
+                                font.bold: true
+                                font.pixelSize: 11
+                            }
+                        }
+                    }
+
                     // Device selection
                     RowLayout {
                         Text { text: "Device:"; color: "#cbd5e1"; font.pixelSize: 12 }
@@ -64,12 +88,12 @@ Dialog {
                             Layout.fillWidth: true
                             textRole: "name"
                             valueRole: "index"
-                            model: decklinkController.getDevices()
+                            model: decklinkController.devices
                         }
                         Button {
-                            text: "Scan Devices"
+                            text: "Scan Hardware"
                             onClicked: {
-                                decklinkDeviceCombo.model = decklinkController.getDevices()
+                                decklinkController.refreshDevices()
                             }
                             contentItem: Text {
                                 text: parent.text

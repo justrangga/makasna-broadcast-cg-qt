@@ -58,6 +58,11 @@ public:
     Q_INVOKABLE void importCsvData(const QString &datasetId, const QString &csvContent);
     Q_INVOKABLE QVariantList getDatasetRows(const QString &datasetId) const;
 
+    // Asset & Media Layer Management (After Effects, Video, Images)
+    Q_INVOKABLE void addMediaLayer(const QString &name, const QString &sourcePath, const QString &mediaType, int bus = 1);
+    Q_INVOKABLE void replaceLayerSource(const QString &templateId, const QString &layerId, const QString &sourcePath);
+    Q_INVOKABLE void deleteLayer(const QString &templateId, const QString &layerId);
+
 signals:
     void activeTemplateIdChanged();
     void selectedLayerIdChanged();

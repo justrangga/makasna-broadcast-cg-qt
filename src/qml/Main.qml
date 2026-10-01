@@ -27,6 +27,7 @@ ApplicationWindow {
             onOpenHardwareDialog: hardwareDialog.open()
             onOpenDataHubDialog: dataHubDialog.open()
             onOpenEsportsDialog: esportsDialog.open()
+            onOpenAssetDialog: assetDialog.open()
         }
 
         // 2. Main Workspace (Designer Studio vs Playout Console)
@@ -93,5 +94,10 @@ ApplicationWindow {
     // Esports Engine & Sponsor Telemetry Dialog (Barracks Controller & Sight)
     EsportsHubDialog {
         id: esportsDialog
+    }
+
+    // Asset & After Effects Media Dialog
+    AssetLibraryDialog {
+        id: assetDialog
     }
 }

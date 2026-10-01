@@ -287,6 +287,99 @@ QVariantList ProjectModel::getDatasetRows(const QString &datasetId) const {
     return QVariantList();
 }
 
+void ProjectModel::addMediaLayer(const QString &name, const QString &sourcePath, const QString &mediaType, int bus) {
+    for (int t = 0; t < m_templates.size(); ++t) {
+        QVariantMap tpl = m_templates[t].toMap();
+        if (tpl.value("id").toString() == m_activeTemplateId) {
+            QVariantList layers = tpl.value("layers").toList();
+
+            QVariantMap newLayer;
+            QString layerId = QString("media_layer_%1").arg(QDateTime::currentMSecsSinceEpoch());
+            newLayer["id"] = layerId;
+            newLayer["name"] = name.isEmpty() ? "Media Asset Layer" : name;
+            newLayer["type"] = (mediaType == "video") ? "video" : (mediaType == "lottie" ? "lottie" : "image");
+            newLayer["mediaType"] = mediaType;
+            newLayer["source"] = sourcePath;
+            newLayer["bus"] = QString("L%1").arg(qBound(1, bus, 4));
+            newLayer["x"] = 100.0;
+            newLayer["y"] = 100.0;
+            newLayer["width"] = (mediaType == "video" || mediaType == "lottie") ? 1280.0 : 400.0;
+            newLayer["height"] = (mediaType == "video" || mediaType == "lottie") ? 720.0 : 400.0;
+            newLayer["opacity"] = 1.0;
+            newLayer["rotation"] = 0.0;
+            newLayer["loop"] = true;
+            newLayer["inPoint"] = 0.0;
+            newLayer["outPoint"] = tpl.value("duration", 5.0).toDouble();
+
+            QVariantList kfs;
+            QVariantMap kf1;
+            kf1["id"] = "kf_0";
+            kf1["time"] = 0.0;
+            kf1["opacity"] = 1.0;
+            kf1["x"] = 100.0;
+            kf1["y"] = 100.0;
+            kfs.append(kf1);
+
+            newLayer["keyframes"] = kfs;
+            layers.append(newLayer);
+            tpl["layers"] = layers;
+            m_templates[t] = tpl;
+
+            m_selectedLayerId = layerId;
+            emit selectedLayerIdChanged();
+            emit templatesChanged();
+
+            qInfo() << "[ProjectModel] Added Media/AE Layer:" << name
+                    << "Type:" << mediaType << "Source:" << sourcePath;
+            return;
+        }
+    }
+}
+
+void ProjectModel::replaceLayerSource(const QString &templateId, const QString &layerId, const QString &sourcePath) {
+    for (int t = 0; t < m_templates.size(); ++t) {
+        QVariantMap tpl = m_templates[t].toMap();
+        if (tpl.value("id").toString() == templateId) {
+            QVariantList layers = tpl.value("layers").toList();
+            for (int l = 0; l < layers.size(); ++l) {
+                QVariantMap layer = layers[l].toMap();
+                if (layer.value("id").toString() == layerId) {
+                    layer["source"] = sourcePath;
+                    layers[l] = layer;
+                    tpl["layers"] = layers;
+                    m_templates[t] = tpl;
+                    emit templatesChanged();
+                    qInfo() << "[ProjectModel] Replaced source for layer:" << layerId << "to" << sourcePath;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void ProjectModel::deleteLayer(const QString &templateId, const QString &layerId) {
+    for (int t = 0; t < m_templates.size(); ++t) {
+        QVariantMap tpl = m_templates[t].toMap();
+        if (tpl.value("id").toString() == templateId) {
+            QVariantList layers = tpl.value("layers").toList();
+            for (int l = 0; l < layers.size(); ++l) {
+                if (layers[l].toMap().value("id").toString() == layerId) {
+                    layers.removeAt(l);
+                    tpl["layers"] = layers;
+                    m_templates[t] = tpl;
+                    if (m_selectedLayerId == layerId) {
+                        m_selectedLayerId = layers.isEmpty() ? "" : layers[0].toMap().value("id").toString();
+                        emit selectedLayerIdChanged();
+                    }
+                    emit templatesChanged();
+                    qInfo() << "[ProjectModel] Deleted layer:" << layerId;
+                    return;
+                }
+            }
+        }
+    }
+}
+
 void ProjectModel::initDefaultProject() {
     // 1. Datasets
     QVariantMap dsLeaderboard;
