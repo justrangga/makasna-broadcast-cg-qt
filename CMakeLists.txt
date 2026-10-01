@@ -9,8 +9,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Qml Network Svg QuickControls2)
-qt_policy(SET QTP0001 NEW)
-qt_policy(SET QTP0004 NEW)
+if(COMMAND qt_policy)
+    qt_policy(SET QTP0001 NEW)
+endif()
 qt_standard_project_setup()
 
 # Application Executable
